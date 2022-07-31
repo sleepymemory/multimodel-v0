@@ -1,0 +1,8 @@
+*.png
+*.npy
+/log
+*.pth
+*.txt
+/__pycache__
+*.jpg
+*.DS_Store
