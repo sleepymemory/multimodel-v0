@@ -57,10 +57,10 @@ class MyDataset(Dataset):
         img = keep_image_size_open_rgb(RGB_img_path)
         us_img = keep_image_size_open_rgb(US_img_path)
 
-        F = F * 10
-        label_F = label_F * 10
-        P = P * 1000
-        label_P = label_P * 1000
+        F = F * 100
+        label_F = label_F * 100
+        P = P * 10000
+        label_P = label_P * 10000
 
         return transform(img), transform(us_img), torch.Tensor(F), torch.Tensor(P), torch.Tensor(
             D), torch.Tensor(label_F), torch.Tensor(label_P), torch.Tensor(label_D)
@@ -72,5 +72,7 @@ if __name__ == "__main__":
     for file in os.listdir(os.path.join(data_path, "D_real")):
         filename_list.append(file)
     data = MyDataset(data_path, filename_list)
-    print(data[0][0].shape)
-    print(data[0][1].shape)
+    print(data[0][7])
+    print(data[1][7])
+    print(data[100][7])
+    print(data[150][7])

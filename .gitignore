@@ -6,3 +6,4 @@
 /__pycache__
 *.jpg
 *.DS_Store
+*.csv
