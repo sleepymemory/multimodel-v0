@@ -9,15 +9,6 @@ aim_path = r"processed_data"
 raw_path = r"multi_moda_03_08"
 data_len = len(os.listdir(os.path.join(raw_path, "RGB_Image")))
 
-if not os.path.exists(raw_path):
-    os.makedirs(raw_path)
-if not os.path.exists("train"):
-    os.makedirs("train")
-if not os.path.exists("train"):
-    os.makedirs("val")
-
-
-
 for i in range(1, data_len + 1):
     if not os.path.exists(os.path.join(aim_path, "test{}".format(i))):
         os.makedirs(os.path.join(aim_path, "test{}".format(i)))
@@ -76,7 +67,7 @@ for i in range(1, data_len + 1):
         Force = [float(lines[-(j + 1)][14]), float(lines[-(j + 1)][15]), float(lines[-(j + 1)][16])]
         np.save(os.path.join(aim_path_n, r'Force', '{}.npy'.format(len(files) - j)), np.array(Force))
 
-path = r"processed_data"
+path = r"processed_data_future"
 data_len = len(os.listdir(path))
 for i in range(1, data_len + 1):
     file_path = os.path.join(path, "test{}".format(i))
@@ -86,6 +77,13 @@ for i in range(1, data_len + 1):
         os.makedirs(os.path.join(file_path, r'label_P'))
     if not os.path.exists(os.path.join(file_path, r'label_F')):
         os.makedirs(os.path.join(file_path, r'label_F'))
+
+    if not os.path.exists(os.path.join(file_path, r'label_D_20')):
+        os.makedirs(os.path.join(file_path, r'label_D_20'))
+    if not os.path.exists(os.path.join(file_path, r'label_P_20')):
+        os.makedirs(os.path.join(file_path, r'label_P_20'))
+    if not os.path.exists(os.path.join(file_path, r'label_F_20')):
+        os.makedirs(os.path.join(file_path, r'label_F_20'))
 
     files = os.listdir(os.path.join(file_path, r'D_real'))
 
@@ -101,19 +99,36 @@ for i in range(1, data_len + 1):
                         os.path.join(file_path, r'label_P', '{}.npy'.format(j + 1)))
         shutil.copyfile(os.path.join(file_path, r'Force', '{}.npy'.format(j + 1)),
                         os.path.join(file_path, r'label_F', '{}.npy'.format(j)))
+        if j + 21 <= len(files):
+            shutil.copyfile(os.path.join(file_path, r'D_expect', '{}.npy'.format(j + 21)),
+                            os.path.join(file_path, r'label_D_20', '{}.npy'.format(j + 1)))
+            shutil.copyfile(os.path.join(file_path, r'P_expect', '{}.npy'.format(j + 21)),
+                            os.path.join(file_path, r'label_P_20', '{}.npy'.format(j + 1)))
+            shutil.copyfile(os.path.join(file_path, r'Force', '{}.npy'.format(j + 21)),
+                            os.path.join(file_path, r'label_F_20', '{}.npy'.format(j)))
+        else:
+            shutil.copyfile(os.path.join(file_path, r'D_expect', '{}.npy'.format(len(files) + 1)),
+                            os.path.join(file_path, r'label_D_20', '{}.npy'.format(j + 1)))
+            shutil.copyfile(os.path.join(file_path, r'P_expect', '{}.npy'.format(len(files) + 1)),
+                            os.path.join(file_path, r'label_P_20', '{}.npy'.format(j + 1)))
+            shutil.copyfile(os.path.join(file_path, r'Force', '{}.npy'.format(len(files) + 1)),
+                            os.path.join(file_path, r'label_F_20', '{}.npy'.format(j)))
 
     os.remove(os.path.join(file_path, r'label_D', '{}.npy'.format(len(files))))
     os.remove(os.path.join(file_path, r'label_P', '{}.npy'.format(len(files))))
     os.remove(os.path.join(file_path, r'label_F', '0.npy'))
+    os.remove(os.path.join(file_path, r'label_D_20', '{}.npy'.format(len(files))))
+    os.remove(os.path.join(file_path, r'label_P_20', '{}.npy'.format(len(files))))
+    os.remove(os.path.join(file_path, r'label_F_20', '0.npy'))
     os.remove(os.path.join(file_path, r'{}'.format(i), '{}.png'.format(len(files))))
     os.remove(os.path.join(file_path, r'cropped_ut_img', '{}.png'.format(len(files))))
     os.remove(os.path.join(file_path, r'D_real', '{}.npy'.format(len(files))))
     os.remove(os.path.join(file_path, r'P_real', '{}.npy'.format(len(files))))
     os.remove(os.path.join(file_path, r'Force', '{}.npy'.format(len(files))))
 
-data_path = r"processed_data"
-train_path = r"train"
-val_path = r"val"
+data_path = r"processed_data_future"
+train_path = r"train_future"
+val_path = r"val_future"
 
 for aim_path in [train_path, val_path]:
     if not os.path.exists(os.path.join(aim_path, r'label_P')):
@@ -122,6 +137,13 @@ for aim_path in [train_path, val_path]:
         os.makedirs(os.path.join(aim_path, r'label_F'))
     if not os.path.exists(os.path.join(aim_path, r'label_D')):
         os.makedirs(os.path.join(aim_path, r'label_D'))
+
+    if not os.path.exists(os.path.join(aim_path, r'label_P_20')):
+        os.makedirs(os.path.join(aim_path, r'label_P_20'))
+    if not os.path.exists(os.path.join(aim_path, r'label_F_20')):
+        os.makedirs(os.path.join(aim_path, r'label_F_20'))
+    if not os.path.exists(os.path.join(aim_path, r'label_D_20')):
+        os.makedirs(os.path.join(aim_path, r'label_D_20'))
 
     if not os.path.exists(os.path.join(aim_path, r'D_real')):
         os.makedirs(os.path.join(aim_path, r'D_real'))
@@ -162,9 +184,15 @@ for i in range(1, data_len + 1):
         shutil.copyfile(os.path.join(file_path, r'label_F', '{}.npy'.format(j + 1)),
                         os.path.join(aim_path, r'label_F', '{}.npy'.format(count)))
 
+        shutil.copyfile(os.path.join(file_path, r'label_D_20', '{}.npy'.format(j + 1)),
+                        os.path.join(aim_path, r'label_D_20', '{}.npy'.format(count)))
+        shutil.copyfile(os.path.join(file_path, r'label_P_20', '{}.npy'.format(j + 1)),
+                        os.path.join(aim_path, r'label_P_20', '{}.npy'.format(count)))
+        shutil.copyfile(os.path.join(file_path, r'label_F_20', '{}.npy'.format(j + 1)),
+                        os.path.join(aim_path, r'label_F_20', '{}.npy'.format(count)))
+
         shutil.copyfile(os.path.join(file_path, r'cropped_ut_img', '{}.png'.format(j + 1)),
                         os.path.join(aim_path, r'cropped_ut_img', '{}.png'.format(count)))
         shutil.copyfile(os.path.join(file_path, r'{}'.format(i), '{}.png'.format(j + 1)),
                         os.path.join(aim_path, r'RGB_image', '{}.png'.format(count)))
         count = count + 1
-

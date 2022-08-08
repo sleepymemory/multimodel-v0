@@ -361,7 +361,7 @@ class SensorFusion(nn.Module):
         batch_dim = image_in.size()[0]
         # out
         img_out, img_out_convs = self.img_encoder(image_in)
-        us_image_out, us_image_out_convs = self.img_encoder(us_image_in)
+        us_image_out, us_image_out_convs = self.us_img_encoder(us_image_in)
         # cloud_out, cloud_out_convs = self.cloud_encoder(cloud_in)
         F_out = self.F_encoder(F_in)
         P_out = self.P_encoder(P_in)
@@ -375,7 +375,7 @@ class SensorFusion(nn.Module):
 
         # Modality Mean and Variances
         mu_z_img, var_z_img = gaussian_parameters(img_out, dim=1)
-        mu_z_us_img, var_z_us_img = gaussian_parameters(img_out, dim=1)
+        mu_z_us_img, var_z_us_img = gaussian_parameters(us_image_out, dim=1)
         # mu_z_cloud, var_z_cloud = gaussian_parameters(us_image_out, dim=1)
         mu_z_F, var_z_F = gaussian_parameters(F_out, dim=1)
         mu_z_P, var_z_P = gaussian_parameters(P_out, dim=1)
