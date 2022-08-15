@@ -9,8 +9,8 @@ aim_path = r"processed_data"
 raw_path = r"multi_moda_03_08"
 data_len = len(os.listdir(os.path.join(raw_path, "RGB_Image")))
 
-if not os.path.exists(raw_path):
-    os.makedirs(raw_path)
+if not os.path.exists(aim_path):
+    os.makedirs(aim_path)
 if not os.path.exists("train"):
     os.makedirs("train")
 if not os.path.exists("train"):

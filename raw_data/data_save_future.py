@@ -5,9 +5,16 @@ import cv2
 import numpy as np
 import csv
 
-aim_path = r"processed_data"
-raw_path = r"multi_moda_03_08"
+aim_path = r"processed_data_future"
+raw_path = r"multi_modal_02_08"
 data_len = len(os.listdir(os.path.join(raw_path, "RGB_Image")))
+
+if not os.path.exists(aim_path):
+    os.makedirs(aim_path)
+if not os.path.exists("train_future"):
+    os.makedirs("train_future")
+if not os.path.exists("val_future"):
+    os.makedirs("val_future")
 
 for i in range(1, data_len + 1):
     if not os.path.exists(os.path.join(aim_path, "test{}".format(i))):
@@ -99,7 +106,7 @@ for i in range(1, data_len + 1):
                         os.path.join(file_path, r'label_P', '{}.npy'.format(j + 1)))
         shutil.copyfile(os.path.join(file_path, r'Force', '{}.npy'.format(j + 1)),
                         os.path.join(file_path, r'label_F', '{}.npy'.format(j)))
-        if j + 21 <= len(files):
+        if j + 21 < len(files):
             shutil.copyfile(os.path.join(file_path, r'D_expect', '{}.npy'.format(j + 21)),
                             os.path.join(file_path, r'label_D_20', '{}.npy'.format(j + 1)))
             shutil.copyfile(os.path.join(file_path, r'P_expect', '{}.npy'.format(j + 21)),
@@ -107,11 +114,11 @@ for i in range(1, data_len + 1):
             shutil.copyfile(os.path.join(file_path, r'Force', '{}.npy'.format(j + 21)),
                             os.path.join(file_path, r'label_F_20', '{}.npy'.format(j)))
         else:
-            shutil.copyfile(os.path.join(file_path, r'D_expect', '{}.npy'.format(len(files) + 1)),
+            shutil.copyfile(os.path.join(file_path, r'D_expect', '{}.npy'.format(len(files))),
                             os.path.join(file_path, r'label_D_20', '{}.npy'.format(j + 1)))
-            shutil.copyfile(os.path.join(file_path, r'P_expect', '{}.npy'.format(len(files) + 1)),
+            shutil.copyfile(os.path.join(file_path, r'P_expect', '{}.npy'.format(len(files))),
                             os.path.join(file_path, r'label_P_20', '{}.npy'.format(j + 1)))
-            shutil.copyfile(os.path.join(file_path, r'Force', '{}.npy'.format(len(files) + 1)),
+            shutil.copyfile(os.path.join(file_path, r'Force', '{}.npy'.format(len(files))),
                             os.path.join(file_path, r'label_F_20', '{}.npy'.format(j)))
 
     os.remove(os.path.join(file_path, r'label_D', '{}.npy'.format(len(files))))
