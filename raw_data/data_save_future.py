@@ -8,6 +8,7 @@ import csv
 aim_path = r"processed_data_future"
 raw_path = r"multi_modal_02_08"
 data_len = len(os.listdir(os.path.join(raw_path, "RGB_Image")))
+step = 20
 
 if not os.path.exists(aim_path):
     os.makedirs(aim_path)
@@ -106,12 +107,12 @@ for i in range(1, data_len + 1):
                         os.path.join(file_path, r'label_P', '{}.npy'.format(j + 1)))
         shutil.copyfile(os.path.join(file_path, r'Force', '{}.npy'.format(j + 1)),
                         os.path.join(file_path, r'label_F', '{}.npy'.format(j)))
-        if j + 21 < len(files):
-            shutil.copyfile(os.path.join(file_path, r'D_expect', '{}.npy'.format(j + 21)),
+        if j + step + 1 < len(files):
+            shutil.copyfile(os.path.join(file_path, r'D_expect', '{}.npy'.format(j + step + 1)),
                             os.path.join(file_path, r'label_D_20', '{}.npy'.format(j + 1)))
-            shutil.copyfile(os.path.join(file_path, r'P_expect', '{}.npy'.format(j + 21)),
+            shutil.copyfile(os.path.join(file_path, r'P_expect', '{}.npy'.format(j + step + 1)),
                             os.path.join(file_path, r'label_P_20', '{}.npy'.format(j + 1)))
-            shutil.copyfile(os.path.join(file_path, r'Force', '{}.npy'.format(j + 21)),
+            shutil.copyfile(os.path.join(file_path, r'Force', '{}.npy'.format(j + step + 1)),
                             os.path.join(file_path, r'label_F_20', '{}.npy'.format(j)))
         else:
             shutil.copyfile(os.path.join(file_path, r'D_expect', '{}.npy'.format(len(files))),
